@@ -9,7 +9,7 @@ function sendMessageMiddleware(req, res, next) {
         .create({
             body: message,
             from:'+15106164267',
-            to: '+917006846972'
+            to: '+919810153260'
         })
         .then(() => {
             // call next function
