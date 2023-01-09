@@ -1,4 +1,16 @@
-import { Avatar, Button,  Heading, Stack, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+
+  Heading,
+
+  SkeletonCircle,
+  SkeletonText,
+
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,14 +20,18 @@ function ContactInfo() {
   const [contact, setContact] = useState({});
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios
-      .get(`http://localhost:8080/api/contacts/${id}`)
+      .get(`https://messaging-app-server.onrender.com/api/contacts/${id}`)
       .then((res) => setContact(res.data))
-      .catch(() => setError(true));
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   }, [id]);
   if (error) return navigate(`/contacts/${id}/pagenotfound`);
+ 
   return (
     <Stack
       margin={"auto"}
@@ -27,14 +43,26 @@ function ContactInfo() {
       <Heading mb={"20px"} fontSize={"25px"}>
         CONTACT INFO
       </Heading>
-      <Avatar size={"xl"} name={contact.firstName + " " + contact.lastName} />
+      {loading && (
+        <Box padding='10' boxShadow='lg' bg='white'>
+        <SkeletonCircle size='10' />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
+      </Box>
+      )}
+      {!loading && <><Avatar size={"xl"} name={contact.firstName + " " + contact.lastName} />
       <Text fontSize={"20px"} fontWeight={"bold"}>
         {contact.firstName + " " + contact.lastName}
       </Text>
       <Text fontSize={"20px"} fontWeight={"bold"}>
         {contact.phone}
       </Text>
-      <Button colorScheme={"purple"} onClick={()=>navigate(`/messages/create/${id}`)}>Send Message</Button>
+      <Button
+        colorScheme={"purple"}
+        onClick={() => navigate(`/messages/create/${id}`)}
+      >
+        Send Message
+      </Button></>}
+      
     </Stack>
   );
 }

@@ -1,4 +1,4 @@
-import { Spinner, Table, Td, Thead, Tr } from "@chakra-ui/react";
+import { Center, Spinner, Table, Td, Thead, Tr } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MessageRow from "./MessageRow";
@@ -29,19 +29,20 @@ function MessageList() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/api/messages")
+      .get("https://messaging-app-server.onrender.com/api/messages")
       .then((res) => setMessages(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   }, []);
   return (
-    <Table size={{base:"sm",sm:"sm",lg:"md"}} >
+    <>
+    {loading ? <Center height={"100%"}><Spinner size={"xl"}></Spinner></Center>:<Table size={{base:"sm",sm:"sm",lg:"md"}} >
         <Thead>
             <Tr><Td></Td><Td>Name</Td><Td>Time</Td><Td>OTP</Td></Tr>
         </Thead>
-      {loading ? (
-        <Spinner></Spinner>
-      ) : (
+        
+      {
+      
         messages.map((el) => (
           <MessageRow
             otp={el.message}
@@ -49,8 +50,10 @@ function MessageList() {
             time={isoTimestampToTime(el.updatedAt)}
           />
         ))
-      )}
-    </Table>
+}
+      
+    </Table>}
+    </>
   );
 }
 
