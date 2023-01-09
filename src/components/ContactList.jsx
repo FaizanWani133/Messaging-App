@@ -16,7 +16,7 @@ function ContactList() {
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
     console.log(contacts);
-  });
+  },[]);
   if(loading)return <Center><Spinner margin={"auto"} size='xl' /></Center>
   return (
     <Stack spacing={"1.5"}>
