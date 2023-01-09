@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Center, Spinner, Stack } from "@chakra-ui/react";
 
 import axios from "axios";
@@ -15,7 +16,7 @@ function ContactList() {
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
     console.log(contacts);
-  }, []);
+  });
   if(loading)return <Center><Spinner margin={"auto"} size='xl' /></Center>
   return (
     <Stack spacing={"1.5"}>

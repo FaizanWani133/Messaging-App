@@ -33,7 +33,7 @@ function MessageList() {
       .then((res) => setMessages(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, []);
+  });
   return (
     <>
     {loading ? <Center height={"100%"}><Spinner size={"xl"}></Spinner></Center>:<Table size={{base:"sm",sm:"sm",lg:"md"}} >
