@@ -15,7 +15,8 @@ function AllRoutes() {
         <Route path="/contacts/:id/pagenotfound" element={<PageNotFound/>}></Route>
         <Route path="/contacts/:id" element={<ContactInfo/>}></Route> 
         <Route path="/messages" element={<MessagesPage/>}></Route>  
-        <Route path="/messages/create/:id" element={<CreateMessagePage/>}></Route> 
+        <Route path="/messages/create/:id" element={<CreateMessagePage/>}></Route>
+        <Route path='*' element={<PageNotFound/>}></Route> 
     </Routes>
   )
 }
